@@ -67,6 +67,23 @@
     usbutils
     gnome-tweaks
     gnomeExtensions.custom-hot-corners-extended
+    jellyfin
+    jellyfin-web
+    jellyfin-ffmpeg
+  ];
+
+  # Remove Gnome Bloat Apps
+  services.gnome.games.enable = false;
+  environment.gnome.excludePackages = with pkgs; [
+    epiphany # web browser
+    gedit # text editor
+    simple-scan # document scanner
+    totem # video player
+    yelp # help tool
+    geary # email client
+    seahorse # password manager
+    gnome-music # music player
+    gnome-tour # gnome guide 
   ];
 
   # These help fix an issue with an external
@@ -94,6 +111,7 @@
   hardware.nvidia.nvidiaSettings = true;
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
 
+  # User Packages
   users.users.jeff = {
     isNormalUser = true;
     description = "Jeff";
@@ -103,19 +121,25 @@
       "kvm" "adbusers" 
     ];
     packages = with pkgs; [
-      vivaldi
-      obsidian
-      vlc
-      quodlibet
-      discord
-      keepassxc
-      cryptomator
-      jackett
+      vivaldi # web browser
+      obsidian # notes
+      vlc # media player
+      quodlibet # music player and library manager
+      discord # social app
+      keepassxc # password manager
+      cryptomator # encrypted vault manager
+      jackett 
       android-studio
     ];
   };
 
   # For Android Studio
   programs.adb.enable = true;
+
+  services.jellyfin = {
+    enable = true;
+    openFirewall = true;
+    user = "jeff";
+  };
 
 }

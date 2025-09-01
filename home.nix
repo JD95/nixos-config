@@ -36,5 +36,17 @@
     };
   };
 
+  dconf = {
+    enable = true;
+    settings = {
+      "org/gnome/shell" = {
+        disable-user-extensions = false;
+        enabled-extensions = with pkgs.gnomeExtensions; [
+          custom-hot-corners-extended.extensionUuid
+        ];
+      };
+    };
+  };
+
   home.stateVersion = "25.05"; 
 }
