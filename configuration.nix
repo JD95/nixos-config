@@ -1,10 +1,12 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, ... }:
 
 {
+  system.stateVersion = "25.05";
+
+  # Nix Settings
+  nixpkgs.config.allowUnfree = true;
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
@@ -15,25 +17,8 @@
   boot.loader.grub.device = "/dev/sdb";
   boot.loader.grub.useOSProber = true;
 
-  # Possible fixes for usb port not working after suspend
-  boot.kernelParams = [ "usbcore.autosuspend=-1" "xhci_hcd.quirks=270336" ];
-  systemd.services.usb-restart = {
-    enable = true;
-    description = "Restart USBs after suspension";
-    after = [ "suspend.target" ];
-    wantedBy = [ "suspend.target" ];
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = [
-        "${pkgs.coreutils}/bin/echo \"Disabling usb port 6\""
-        "${pkgs.kmod}/bin/modprobe -r xhci_pci"
-        "${pkgs.coreutils}/bin/echo \"Enabling usb port 6\""
-	"${pkgs.kmod}/bin/modprobe xhci_pci"
-      ];
-    };
-  };
-
-  networking.hostName = "nixos"; # Define your hostname.
+  # Networking
+  networking.hostName = "nixos";
   networking.networkmanager.enable = true;
 
   # Locale
@@ -56,11 +41,6 @@
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 
-  hardware.nvidia.modesetting.enable = true;
-  hardware.nvidia.open = false;
-  hardware.nvidia.nvidiaSettings = true;
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
-
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
@@ -82,8 +62,37 @@
 
   services.jackett.enable = true;
 
-  # For Android Studio
-  programs.adb.enable = true;
+  # System Packages
+  environment.systemPackages = with pkgs; [
+    usbutils
+    gnome-tweaks
+    gnomeExtensions.custom-hot-corners-extended
+  ];
+
+  # These help fix an issue with an external
+  # drive getting lost after suspends 
+  boot.kernelParams = [ "usbcore.autosuspend=-1" "xhci_hcd.quirks=270336" ];
+  systemd.services.usb-restart = {
+    enable = true;
+    description = "Restart USBs after suspension";
+    after = [ "suspend.target" ];
+    wantedBy = [ "suspend.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = [
+        "${pkgs.coreutils}/bin/echo \"Disabling usb port 6\""
+        "${pkgs.kmod}/bin/modprobe -r xhci_pci"
+        "${pkgs.coreutils}/bin/echo \"Enabling usb port 6\""
+	"${pkgs.kmod}/bin/modprobe xhci_pci"
+      ];
+    };
+  };
+
+  # Necessary to prevent hangs during suspend 
+  hardware.nvidia.modesetting.enable = true;
+  hardware.nvidia.open = false;
+  hardware.nvidia.nvidiaSettings = true;
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
 
   users.users.jeff = {
     isNormalUser = true;
@@ -106,21 +115,7 @@
     ];
   };
 
-  nixpkgs.config.allowUnfree = true;
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-  environment.systemPackages = with pkgs; [
-    usbutils
-    gnome-tweaks
-    gnomeExtensions.custom-hot-corners-extended
-  ];
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "25.05"; # Did you read the comment?
+  # For Android Studio
+  programs.adb.enable = true;
 
 }
