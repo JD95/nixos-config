@@ -41,6 +41,14 @@
   services.xserver.enable = true;
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.nvidia = {
+    modesetting.enable = true;
+    open = false;
+    nvidiaSettings = true;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+  };
+
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -111,12 +119,6 @@
     };
   };
 
-  # Necessary to prevent hangs during suspend 
-  hardware.nvidia.modesetting.enable = true;
-  hardware.nvidia.open = false;
-  hardware.nvidia.nvidiaSettings = true;
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
-
   # User Packages
   users.users.jeff = {
     isNormalUser = true;
@@ -125,6 +127,8 @@
       "networkmanager" "wheel" 
       # For Android Studio
       "kvm" "adbusers" 
+      # For Nvidia
+      "video"
     ];
     packages = with pkgs; [
       vivaldi # web browser
@@ -137,6 +141,7 @@
       jackett 
       android-studio
       ueberzugpp # image rendering in terminal via X11
+      gnucash # accounting
     ];
   };
 
