@@ -136,8 +136,16 @@
       cryptomator # encrypted vault manager
       jackett 
       android-studio
+      ueberzugpp # image rendering in terminal via X11
     ];
   };
+
+  # Fonts
+  fonts.packages = with pkgs; [
+    nerd-fonts.fira-code
+    nerd-fonts.fira-mono
+    nerd-fonts.dejavu-sans-mono
+  ];
 
   # For Android Studio
   programs.adb.enable = true;

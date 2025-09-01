@@ -8,7 +8,12 @@
     git
     vscode    
     alacritty
+    yazi
   ];
+
+  programs.yazi = {
+    enable = true;
+  };
   
   programs.vim = {
     enable = true;
@@ -21,6 +26,12 @@
 
   programs.alacritty = {
     enable = true;
+    settings = {
+      font.normal = { 
+        family = "Dejavu Sans Mono";
+        style = "Regular";
+      };
+    };
   };
 
   programs.git = {
