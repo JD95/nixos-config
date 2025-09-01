@@ -7,6 +7,7 @@
   home.packages = with pkgs; [ 
     git
     vscode    
+    alacritty
   ];
   
   programs.vim = {
@@ -15,6 +16,10 @@
   };
 
   programs.bash = {
+    enable = true;
+  };
+
+  programs.alacritty = {
     enable = true;
   };
 
