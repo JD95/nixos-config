@@ -6,7 +6,6 @@
 
   home.packages = with pkgs; [ 
     git
-    vim
     vscode    
   ];
   
@@ -23,10 +22,6 @@
     enable = true;
     userName = "JD95";
     userEmail = "jeffreydwyer95@outlook.com";
-  };
-
-  programs.vivaldi = {
-    enable = true;
   };
 
   home.stateVersion = "25.05"; 
