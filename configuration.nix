@@ -10,6 +10,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./usb-wakeup-disable.nix
     ];
 
   # Bootloader.
@@ -60,7 +61,12 @@
     pulse.enable = true;
   };
 
-  services.jackett.enable = true;
+  hardware.usb.wakeupDisabled = [
+    # Keyboard
+    { vendor = "04b4"; product = "0818"; }
+    # Mouse
+    { vendor = "25a7"; product = "fa07"; }
+  ];
 
   # System Packages
   environment.systemPackages = with pkgs; [
@@ -141,5 +147,7 @@
     openFirewall = true;
     user = "jeff";
   };
+
+  services.jackett.enable = true;
 
 }
