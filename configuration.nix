@@ -16,18 +16,22 @@
   boot.loader.grub.useOSProber = true;
 
   # Possible fixes for usb port not working after suspend
-  # boot.kernelParams = [ "usbcore.autosuspend=-1" "xhci_hcd.quirks=270336" ];
-  # systemd.services.usb-restart = {
-  #   enable = true;
-  #   description = "Restart USBs after suspension";
-  #   after = [ "suspend.target" ];
-  #   serviceConfig = {
-  #     Type = "oneshot";
-  #     ExecStart = "${pkgs.coreutils}/bin/true";
-  #     ExecStop = "${pkgs.kmod}/bin/modprobe -r xhci_pci && ${pkgs.kmod}/bin/modprobe xchi_pci";
-  #     RemainAfterExit = "yes";
-  #   };
-  # };
+  boot.kernelParams = [ "usbcore.autosuspend=-1" "xhci_hcd.quirks=270336" ];
+  systemd.services.usb-restart = {
+    enable = true;
+    description = "Restart USBs after suspension";
+    after = [ "suspend.target" ];
+    wantedBy = [ "suspend.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = [
+        "${pkgs.coreutils}/bin/echo \"Disabling usb port 6\""
+        "${pkgs.kmod}/bin/modprobe -r xhci_pci"
+        "${pkgs.coreutils}/bin/echo \"Enabling usb port 6\""
+	"${pkgs.kmod}/bin/modprobe xhci_pci"
+      ];
+    };
+  };
 
   networking.hostName = "nixos"; # Define your hostname.
   networking.networkmanager.enable = true;
@@ -78,10 +82,17 @@
 
   services.jackett.enable = true;
 
+  # For Android Studio
+  programs.adb.enable = true;
+
   users.users.jeff = {
     isNormalUser = true;
     description = "Jeff";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ 
+      "networkmanager" "wheel" 
+      # For Android Studio
+      "kvm" "adbusers" 
+    ];
     packages = with pkgs; [
       vivaldi
       obsidian
@@ -91,10 +102,13 @@
       keepassxc
       cryptomator
       jackett
+      android-studio
+      vscode
     ];
   };
 
   nixpkgs.config.allowUnfree = true;
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   environment.systemPackages = with pkgs; [
     git
