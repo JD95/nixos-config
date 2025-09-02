@@ -5,9 +5,10 @@
   home.homeDirectory = "/home/jeff";
 
   home.packages = with pkgs; [ 
+    alacritty
+    direnv
     git
     vscode    
-    alacritty
     yazi
   ];
 
@@ -22,6 +23,12 @@
 
   programs.bash = {
     enable = true;
+  };
+
+  programs.direnv = {
+    enable = true;
+    enableBashIntegration = true;
+    nix-direnv.enable = true;
   };
 
   programs.alacritty = {
@@ -47,6 +54,8 @@
         extensions = with pkgs.vscode-extensions; [
           vscodevim.vim
           jnoortheen.nix-ide
+          haskell.haskell
+          mkhl.direnv
         ];
       };
     };
