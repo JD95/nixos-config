@@ -38,22 +38,21 @@
   };
 
   # Graphics and Desktop 
-  services.xserver.enable = true;
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-  services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver = {
+    enable = true;
+    videoDrivers = [ "nvidia" ];
+    displayManager.gdm.enable = true;
+    desktopManager.gnome.enable = true;
+    xkb = {
+      layout = "us";
+      variant = "";
+    };
+  };
   hardware.nvidia = {
     modesetting.enable = true;
     open = false;
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
-  };
-
-
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
   };
 
   # Enable CUPS to print documents.
@@ -81,6 +80,7 @@
     usbutils
     gnome-tweaks
     gnomeExtensions.custom-hot-corners-extended
+    gnomeExtensions.wallpaper-slideshow
     jellyfin
     jellyfin-web
     jellyfin-ffmpeg
@@ -114,7 +114,7 @@
         "${pkgs.coreutils}/bin/echo \"Disabling usb port 6\""
         "${pkgs.kmod}/bin/modprobe -r xhci_pci"
         "${pkgs.coreutils}/bin/echo \"Enabling usb port 6\""
-	"${pkgs.kmod}/bin/modprobe xhci_pci"
+      	"${pkgs.kmod}/bin/modprobe xhci_pci"
       ];
     };
   };

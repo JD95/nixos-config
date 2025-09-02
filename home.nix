@@ -59,6 +59,7 @@
         disable-user-extensions = false;
         enabled-extensions = with pkgs.gnomeExtensions; [
           custom-hot-corners-extended.extensionUuid
+          wallpaper-slideshow.extensionUuid
         ];
       };
     };
