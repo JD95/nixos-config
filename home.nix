@@ -56,6 +56,7 @@
           jnoortheen.nix-ide
           haskell.haskell
           mkhl.direnv
+          rust-lang.rust-analyzer
         ];
       };
     };
