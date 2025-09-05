@@ -143,6 +143,7 @@
       ueberzugpp # image rendering in terminal via X11
       gnucash # accounting
       libreoffice-qt # office stuff 
+      whatsie # whatsapp client
     ];
   };
 
