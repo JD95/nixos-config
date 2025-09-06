@@ -47,15 +47,26 @@
     };
   };
   hardware.nvidia = {
+    # Use the open source drivers
+    # Recommended for RTX 20-Series
+    open = true; 
     modesetting.enable = true;
-    open = false;
+    powerManagement.enable = false;
+    powerManagement.finegrained = false;
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
+  # For Login screen
   services.displayManager.sddm.enable = true;
-  programs.hyprland = {
-    enable = true;
-  };
+  programs.hyprland.enable = true;
+  # For running commands as sudo
+  security.polkit.enable = true;
+
+  # Enable for external drive discovery
+  # and auto mounting
+  services.udisks2.enable = true;
+  services.gvfs.enable = true;
+  services.devmon.enable = true;
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -131,6 +142,8 @@
       "kvm" "adbusers" 
       # For Nvidia
       "video"
+      # For autoloading external drives
+      "storage"
     ];
     packages = with pkgs; [
       vivaldi # web browser
@@ -147,6 +160,8 @@
       libreoffice-qt # office stuff 
       whatsie # whatsapp client
       musescore # music notation
+      nautilus
+      lxsession
     ];
   };
 

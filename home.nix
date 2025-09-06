@@ -21,18 +21,21 @@
       monitor = [ ",preferred,auto,1" ];
       bind = [
         "SUPER,Return,exec,alacritty"
-        "SUPER,D,exec,rofi -show drun"
+        "SUPER,SPACE,exec,rofi -show drun"
         "SUPER,Q,killactive"
+        "CTRL,F6,exec,wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+        "CTRL,F7,exec,wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
       ];
       bindm = [
         "SUPER,mouse:272,movewindow"
         "SUPER,mouse:273,resizewindow"
       ];
       exec-once = [
-        "waybar"
         "mako"
         "nm-applet"
+        "hyprpaper"
         "blueman-applet"
+        "lxsession"
       ];
       input = {
         kb_layout = "us";
@@ -47,8 +50,27 @@
 
   programs.waybar.enable = true;
   programs.rofi.enable = true;
+  programs.hyprlock.enable = true;
   services.mako.enable = true;
   services.hypridle.enable = true;
+  services.hyprpaper = {
+    enable = true;
+    settings = {
+      preload = [
+        "/home/jeff/Pictures/wallpapers/penrose_1.png"
+        "/home/jeff/Pictures/wallpapers/penrose_2.png"
+        "/home/jeff/Pictures/wallpapers/penrose_3.png"
+        "/home/jeff/Pictures/wallpapers/penrose_4.png"
+        "/home/jeff/Pictures/wallpapers/penrose_5.png"
+        "/home/jeff/Pictures/wallpapers/penrose_6.png"
+        "/home/jeff/Pictures/wallpapers/penrose_7.png"
+        "/home/jeff/Pictures/wallpapers/penrose_8.png"
+      ];
+      wallpaper = [
+        ",/home/jeff/Pictures/wallpapers/penrose_1.png"
+      ];
+    };
+  };
 
   programs.yazi = {
     enable = true;
@@ -102,15 +124,51 @@
 
   dconf = {
     enable = true;
-    # settings = {
-    #   "org/gnome/shell" = {
-    #     disable-user-extensions = false;
-    #     enabled-extensions = with pkgs.gnomeExtensions; [
-    #       custom-hot-corners-extended.extensionUuid
-    #       wallpaper-slideshow.extensionUuid
-    #     ];
-    #   };
-    # };
+    settings = {
+      "org/gnome/desktop/interface" = {
+        gtk-theme = "catppuccin-macchiato-mauve-compact";
+        color-scheme = "prefer-dark";
+      };
+    };
+  };
+
+  qt = {
+      enable = true;
+      platformTheme.name = "gtk";
+  };
+  home.pointerCursor = {
+    gtk.enable = true;
+    package = pkgs.bibata-cursors;
+    name = "Bibata-Modern-Classic";
+    size = 12;
+  };
+  gtk = {
+    enable = true;
+    iconTheme = {
+      package = pkgs.catppuccin-papirus-folders.override {
+        flavor = "macchiato";
+        accent = "lavender";
+      };
+      name = "Papirus-Dark";
+    };
+    theme = {
+        name = "catppuccin-macchiato-mauve-compact";
+        package = pkgs.catppuccin-gtk.override {
+          accents = ["mauve"];
+          variant = "macchiato";
+          size = "compact";
+        };
+    };
+    gtk3.extraConfig = {
+      Settings = ''
+        gtk-application-prefer-dark-theme=1
+      '';
+    };
+    gtk4.extraConfig = {
+      Settings = ''
+        gtk-application-prefer-dark-theme=1
+      '';
+    };
   };
 
   home.stateVersion = "25.05"; 
