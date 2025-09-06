@@ -41,8 +41,6 @@
   services.xserver = {
     enable = true;
     videoDrivers = [ "nvidia" ];
-    displayManager.gdm.enable = true;
-    desktopManager.gnome.enable = true;
     xkb = {
       layout = "us";
       variant = "";
@@ -53,6 +51,10 @@
     open = false;
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
+  };
+  services.displayManager.sddm.enable = true;
+  programs.hyprland = {
+    enable = true;
   };
 
   # Enable CUPS to print documents.
@@ -78,27 +80,27 @@
   # System Packages
   environment.systemPackages = with pkgs; [
     usbutils
-    gnome-tweaks
-    gnomeExtensions.custom-hot-corners-extended
-    gnomeExtensions.wallpaper-slideshow
+    # gnome-tweaks
+    # gnomeExtensions.custom-hot-corners-extended
+    # gnomeExtensions.wallpaper-slideshow
     jellyfin
     jellyfin-web
     jellyfin-ffmpeg
   ];
 
   # Remove Gnome Bloat Apps
-  services.gnome.games.enable = false;
-  environment.gnome.excludePackages = with pkgs; [
-    epiphany # web browser
-    gedit # text editor
-    simple-scan # document scanner
-    totem # video player
-    yelp # help tool
-    geary # email client
-    seahorse # password manager
-    gnome-music # music player
-    gnome-tour # gnome guide 
-  ];
+  # services.gnome.games.enable = false;
+  # environment.gnome.excludePackages = with pkgs; [
+  #   epiphany # web browser
+  #   gedit # text editor
+  #   simple-scan # document scanner
+  #   totem # video player
+  #   yelp # help tool
+  #   geary # email client
+  #   seahorse # password manager
+  #   gnome-music # music player
+  #   gnome-tour # gnome guide 
+  # ];
 
   # These help fix an issue with an external
   # drive getting lost after suspends 
@@ -144,6 +146,7 @@
       gnucash # accounting
       libreoffice-qt # office stuff 
       whatsie # whatsapp client
+      musescore # music notation
     ];
   };
 
