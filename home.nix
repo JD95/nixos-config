@@ -37,7 +37,7 @@
       input = {
         kb_layout = "us";
         kb_options = [
-          "caps:ctrl"
+          "ctrl:nocaps"
         ];
         follow_mouse = 1;
       };
