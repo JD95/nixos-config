@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ inputs, config, pkgs, ... }:
 
 {
   system.stateVersion = "25.05";
@@ -147,8 +147,13 @@
       lxsession # gui sudoo entry
       hyprshot # screenshots
       age # secrets generation
+      sops # secrets
     ];
   };
+
+  home-manager.sharedModules = [
+    inputs.sops-nix.homeManagerModules.sops
+  ];
 
   # Fonts
   fonts.packages = with pkgs; [

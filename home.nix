@@ -1,8 +1,21 @@
-{ config, pkgs, ... }:
+{ inputs, config, pkgs, ... }:
 
 {
+  imports = [
+    inputs.sops-nix.homeManagerModules.sops
+  ];
+
   home.username = "jeff";
   home.homeDirectory = "/home/jeff";
+
+  sops = {
+    age.keyFile = "/home/jeff/.config/sops/age/key.txt";
+    defaultSopsFile = ./secrets.yaml;
+    secrets = {
+      "accounts/google/user" = {};
+      "accounts/google/pass" = {};
+    };
+  };
 
   home.packages = with pkgs; [ 
     alacritty
