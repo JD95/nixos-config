@@ -11,6 +11,7 @@
     vscode    
     yazi
     kitty # required by hyprland
+    rclone
   ];
 
   programs.kitty.enable = true;
@@ -20,9 +21,36 @@
     settings = {
       monitor = [ ",preferred,auto,1" ];
       bind = [
+        "SUPER+SHIFT,Q,exec,hyprlock"
+        "SUPER,P,exec,hyprshot -m region"
+
+        # Launch Applications
         "SUPER,Return,exec,alacritty"
         "SUPER,SPACE,exec,rofi -show drun"
+
+        # Focused Window
+        "SUPER,H,movefocus,l"
+        "SUPER,J,movefocus,d"
+        "SUPER,K,movefocus,u"
+        "SUPER,L,movefocus,r"
+
+        # Window Position 
+        "SUPER+SHIFT,H,movewindow,l"
+        "SUPER+SHIFT,J,movewindow,d"
+        "SUPER+SHIFT,K,movewindow,u"
+        "SUPER+SHIFT,L,movewindow,r"
+
+        # Window Size
+        "SUPER+ALT,H,resizeactive,-50 0"
+        "SUPER+ALT,J,resizeactive,0 -50"
+        "SUPER+ALT,K,resizeactive,0 50"
+        "SUPER+ALT,L,resizeactive,50 0"
+
+        # Window State
         "SUPER,Q,killactive"
+        "SUPER,F,togglefloating,"
+
+        # Volume Controls
         "CTRL,F6,exec,wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
         "CTRL,F7,exec,wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
       ];
@@ -30,6 +58,15 @@
         "SUPER,mouse:272,movewindow"
         "SUPER,mouse:273,resizewindow"
       ];
+      cursor = {
+        # Prevents stutter when customizing 
+        # the cursor
+        no_hardware_cursors = true;
+      };
+      misc = {
+        # Makes resizing windows a bit smoother
+        animate_manual_resizes = true;
+      };
       exec-once = [
         "mako"
         "nm-applet"

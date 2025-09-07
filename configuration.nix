@@ -91,27 +91,10 @@
   # System Packages
   environment.systemPackages = with pkgs; [
     usbutils
-    # gnome-tweaks
-    # gnomeExtensions.custom-hot-corners-extended
-    # gnomeExtensions.wallpaper-slideshow
     jellyfin
     jellyfin-web
     jellyfin-ffmpeg
   ];
-
-  # Remove Gnome Bloat Apps
-  # services.gnome.games.enable = false;
-  # environment.gnome.excludePackages = with pkgs; [
-  #   epiphany # web browser
-  #   gedit # text editor
-  #   simple-scan # document scanner
-  #   totem # video player
-  #   yelp # help tool
-  #   geary # email client
-  #   seahorse # password manager
-  #   gnome-music # music player
-  #   gnome-tour # gnome guide 
-  # ];
 
   # These help fix an issue with an external
   # drive getting lost after suspends 
@@ -153,15 +136,17 @@
       discord # social app
       keepassxc # password manager
       cryptomator # encrypted vault manager
-      jackett 
+      jackett # torrent tracker
       android-studio
       ueberzugpp # image rendering in terminal via X11
       gnucash # accounting
       libreoffice-qt # office stuff 
       whatsie # whatsapp client
       musescore # music notation
-      nautilus
-      lxsession
+      nautilus # file manager separate from gnome
+      lxsession # gui sudoo entry
+      hyprshot # screenshots
+      age # secrets generation
     ];
   };
 
@@ -182,5 +167,4 @@
   };
 
   services.jackett.enable = true;
-
 }
