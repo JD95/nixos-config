@@ -1,15 +1,17 @@
-{ inputs, config, pkgs, ... }:
+{ inputs, pkgs, ... }:
 
-{
+let 
+  home-dir = "/home/jeff";
+in {
+  home.username = "jeff";
+  home.homeDirectory = home-dir;
+
   imports = [
     inputs.sops-nix.homeManagerModules.sops
   ];
 
-  home.username = "jeff";
-  home.homeDirectory = "/home/jeff";
-
   sops = {
-    age.keyFile = "/home/jeff/.config/sops/age/key.txt";
+    age.keyFile = "${home-dir}/.config/sops/age/keys.txt";
     defaultSopsFile = ./secrets.yaml;
     secrets = {
       "accounts/google/user" = {};
@@ -218,6 +220,35 @@
       Settings = ''
         gtk-application-prefer-dark-theme=1
       '';
+    };
+  };
+
+  systemd.user.services.sync-google-drive = {
+    Unit = {
+      Description = "Sync Google Drive";
+    };
+    Install = {
+      WantedBy = [ "default.target" ];
+    };
+    Service = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.writeShellScript "sync-google-drive" ''
+        ${pkgs.coreutils}/bin/echo "Starting sync of google drive"
+        ${pkgs.rclone}/bin/rclone bisync \
+            --resync \
+            "google:/" "${home-dir}/gdrive" \
+            --compare size,modtime,checksum \
+            --modify-window 1s \
+            --create-empty-src-dirs \
+            --drive-acknowledge-abuse \
+            --drive-skip-gdocs \
+            --drive-skip-shortcuts \
+            --drive-skip-dangling-shortcuts \
+            --metadata \
+            --progress \
+            --verbose \
+            --log-file "${home-dir}/.config/rclone/rclone.log" 
+        ''}";
     };
   };
 

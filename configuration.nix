@@ -151,10 +151,6 @@
     ];
   };
 
-  home-manager.sharedModules = [
-    inputs.sops-nix.homeManagerModules.sops
-  ];
-
   # Fonts
   fonts.packages = with pkgs; [
     nerd-fonts.fira-code

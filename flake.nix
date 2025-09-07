@@ -17,8 +17,10 @@
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.users.jeff = import ./home.nix;
+          home-manager.extraSpecialArgs = {
+            inherit inputs;
+          };
         }
-        sops-nix.nixosModules.sops
       ];
     };
   };
