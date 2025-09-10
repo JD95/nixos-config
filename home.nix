@@ -65,6 +65,30 @@ in {
         "SUPER,Q,killactive"
         "SUPER,F,togglefloating,"
 
+        # Workspace Focus
+        "SUPER+CTRL,1,focusworkspaceoncurrentmonitor,1"
+        "SUPER+CTRL,2,focusworkspaceoncurrentmonitor,2"
+        "SUPER+CTRL,3,focusworkspaceoncurrentmonitor,3"
+        "SUPER+CTRL,4,focusworkspaceoncurrentmonitor,4"
+        "SUPER+CTRL,5,focusworkspaceoncurrentmonitor,5"
+        "SUPER+CTRL,6,focusworkspaceoncurrentmonitor,6"
+        "SUPER+CTRL,7,focusworkspaceoncurrentmonitor,7"
+        "SUPER+CTRL,8,focusworkspaceoncurrentmonitor,8"
+        "SUPER+CTRL,9,focusworkspaceoncurrentmonitor,9"
+        "SUPER,TAB,focusworkspaceoncurrentmonitor,+1"
+        "SUPER+SHIFT,TAB,focusworkspaceoncurrentmonitor,-1"
+
+        # Workspace Windows 
+        "SUPER+CTRL+SHIFT,1,movetoworkspacesilent,1"
+        "SUPER+CTRL+SHIFT,2,movetoworkspacesilent,2"
+        "SUPER+CTRL+SHIFT,3,movetoworkspacesilent,3"
+        "SUPER+CTRL+SHIFT,4,movetoworkspacesilent,4"
+        "SUPER+CTRL+SHIFT,5,movetoworkspacesilent,5"
+        "SUPER+CTRL+SHIFT,6,movetoworkspacesilent,6"
+        "SUPER+CTRL+SHIFT,7,movetoworkspacesilent,7"
+        "SUPER+CTRL+SHIFT,8,movetoworkspacesilent,8"
+        "SUPER+CTRL+SHIFT,9,movetoworkspacesilent,9"
+
         # Volume Controls
         "CTRL,F6,exec,wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
         "CTRL,F7,exec,wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
