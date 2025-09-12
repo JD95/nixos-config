@@ -111,6 +111,12 @@
         "${pkgs.kmod}/bin/modprobe -r xhci_pci"
         "${pkgs.coreutils}/bin/echo \"Enabling usb port 6\""
       	"${pkgs.kmod}/bin/modprobe xhci_pci"
+        ''
+        if [ -d /run/media/jeff/easystore ]; then 
+          ${pkgs.coreutils}/bin/mkdir -p /run/media/jeff/easystore
+          ${pkgs.coreutils}/bin/mount /dev/sdc1 /run/media/jeff/easystore
+        fi
+        ''
       ];
     };
   };
@@ -154,6 +160,7 @@
       age # secrets generation
       sops # secrets
       zoom-us
+      rofimoji
     ];
   };
 

@@ -38,6 +38,8 @@ in {
       bind = [
         "SUPER+SHIFT,Q,exec,hyprlock"
         "SUPER,P,exec,hyprshot -m region"
+        # bind to .
+        "SUPER,code:60,exec,rofimoji"
 
         # Launch Applications
         "SUPER,Return,exec,alacritty"
