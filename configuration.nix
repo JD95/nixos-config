@@ -106,18 +106,18 @@
     wantedBy = [ "suspend.target" ];
     serviceConfig = {
       Type = "oneshot";
-      ExecStart = [
-        "${pkgs.coreutils}/bin/echo \"Disabling usb port 6\""
-        "${pkgs.kmod}/bin/modprobe -r xhci_pci"
-        "${pkgs.coreutils}/bin/echo \"Enabling usb port 6\""
-      	"${pkgs.kmod}/bin/modprobe xhci_pci"
-        ''
+      ExecStart = "${pkgs.writeShellScript "usb-restart" ''
+        ${pkgs.coreutils}/bin/echo "Starting usb-restart"
+
+        ${pkgs.coreutils}/bin/echo \"Disabling usb port 6\"
+        ${pkgs.kmod}/bin/modprobe -r xhci_pci
+        ${pkgs.coreutils}/bin/echo \"Enabling usb port 6\"
+      	${pkgs.kmod}/bin/modprobe xhci_pci
         if [ -d /run/media/jeff/easystore ]; then 
           ${pkgs.coreutils}/bin/mkdir -p /run/media/jeff/easystore
           ${pkgs.coreutils}/bin/mount /dev/sdc1 /run/media/jeff/easystore
         fi
-        ''
-      ];
+        ''}";
     };
   };
   systemd.services."systemd-suspend" = {
