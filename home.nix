@@ -2,6 +2,7 @@
 
 let 
   home-dir = "/home/jeff";
+  external-drive-dir = "/run/media/jeff/easystore";
 in {
   home.username = "jeff";
   home.homeDirectory = home-dir;
@@ -27,6 +28,7 @@ in {
     yazi
     kitty # required by hyprland
     rclone
+    zoxide
   ];
 
   programs.kitty.enable = true;
@@ -150,10 +152,19 @@ in {
     };
   };
 
+  programs.zoxide = {
+    enable = true;
+    enableBashIntegration = true;
+  };
+
   programs.yazi = {
     enable = true;
-  };
-  
+    plugins = {
+      rsync = pkgs.yaziPlugins.rsync; 
+      mount = pkgs.yaziPlugins.mount;
+    }; 
+  };  
+
   programs.vim = {
     enable = true;
     defaultEditor = true;
@@ -262,7 +273,7 @@ in {
         ${pkgs.coreutils}/bin/echo "Starting sync of google drive"
         ${pkgs.rclone}/bin/rclone bisync \
             --resync \
-            "google:/" "${home-dir}/gdrive" \
+            "google:/" "${external-drive-dir}/google-drive" \
             --compare size,modtime,checksum \
             --modify-window 1s \
             --create-empty-src-dirs \

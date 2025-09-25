@@ -160,8 +160,9 @@
       age # secrets generation
       sops # secrets
       zoom-us
-      rofimoji
-    ];
+      rofimoji # emoji picker
+      rsync # file sync, mainly for playlist sync
+    ]; 
   };
 
   # Fonts
