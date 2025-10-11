@@ -103,7 +103,7 @@
     enable = true;
     description = "Restart USBs after suspension";
     after = [ "suspend.target" ];
-    wantedBy = [ "suspend.target" ];
+    wantedBy = [ "suspend.target" "multi-user.target" ];
     serviceConfig = {
       Type = "oneshot";
       ExecStart = "${pkgs.writeShellScript "usb-restart" ''
