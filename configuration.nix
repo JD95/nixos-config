@@ -182,4 +182,10 @@
   };
 
   services.jackett.enable = true;
+
+  services.ollama = {
+    enable = true;
+    acceleration = "cuda";
+    loadModels = [ "qwen3:14b" "deepseek-coder:6.7b" ];
+  };
 }
