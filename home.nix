@@ -111,6 +111,7 @@ in {
         animate_manual_resizes = true;
       };
       exec-once = [
+        "waybar"
         "mako"
         "nm-applet"
         "hyprpaper"
@@ -128,7 +129,33 @@ in {
   };
 
 
-  programs.waybar.enable = true;
+  programs.waybar = {
+    enable = true;
+    settings = [{
+      layer = "top";
+      position = "top";
+      mod = "dock";
+      exclusive = true;
+      passthrough = false;
+      gtk-layer-shell = true;
+      height = 0;
+      modules-left = [
+        "hyprland/workspaces"
+      ];
+      modules-center = [
+        "hyprland/window"
+      ];
+      modules-right = [
+        "pulseaudio"
+        "clock"
+      ];
+      pulseaudio = {
+        format = "{icon} {volume}%";
+        tooltip = false;
+        format-muted = "Muted";
+      };
+    }];
+  };
   programs.rofi.enable = true;
   programs.hyprlock.enable = true;
   services.mako.enable = true;
