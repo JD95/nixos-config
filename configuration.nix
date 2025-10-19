@@ -162,6 +162,7 @@
       zoom-us
       wofi-emoji # emoji picker
       rsync # file sync, mainly for playlist sync
+      hledger # cli accounting
     ]; 
   };
 
