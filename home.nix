@@ -41,11 +41,11 @@ in {
         "SUPER+SHIFT,Q,exec,hyprlock"
         "SUPER,P,exec,hyprshot -m region"
         # bind to .
-        "SUPER,code:60,exec,rofimoji"
+        "SUPER,code:60,exec,wofi-emoji"
 
         # Launch Applications
         "SUPER,Return,exec,alacritty"
-        "SUPER,SPACE,exec,rofi -show drun"
+        "SUPER,SPACE,exec,wofi --show drun"
 
         # Focused Window
         "SUPER,H,movefocus,l"
@@ -128,9 +128,9 @@ in {
     };
   };
 
-
   programs.waybar = {
     enable = true;
+    style = builtins.readFile ./waybar/style.css;
     settings = [{
       layer = "top";
       position = "top";
@@ -142,21 +142,32 @@ in {
       modules-left = [
         "hyprland/workspaces"
       ];
-      modules-center = [
-        "hyprland/window"
-      ];
+      modules-center = [ ];
       modules-right = [
         "pulseaudio"
+        "custom/divider" 
         "clock"
+        "custom/space"
       ];
       pulseaudio = {
         format = "{icon} {volume}%";
         tooltip = false;
         format-muted = "Muted";
       };
+      "custom/divider" = {
+        format = " | ";
+        interval = "once";
+        tooltip = false;
+      };
+      "custom/space" = {
+        format = " ";
+        interval = "once";
+        tooltip = false;
+      };
     }];
   };
-  programs.rofi.enable = true;
+
+  programs.wofi.enable = true;
   programs.hyprlock.enable = true;
   services.mako.enable = true;
   services.hypridle.enable = true;
@@ -314,6 +325,37 @@ in {
             --verbose \
             --log-file "${home-dir}/.config/rclone/rclone.log" 
         ''}";
+    };
+  };
+
+  systemd.user.services.cycle-wallpaper = {
+    Unit = {
+      Description = "Cycles Wallpapers managed by Hyprpaper";
+    };
+
+    Install = {
+
+      WantedBy = [ "default.target" ];
+    };
+    Service = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.writeShellScript "cycle-wallpaper" ''
+        WALLPAPER_DIR="$HOME/Pictures/wallpapers"
+        CURRENT_WALL=$(${pkgs.hyprland}/bin/hyprctl hyprpaper listloaded | ${pkgs.coreutils}/bin/grep wallpaper | ${pkgs.coreutils}/bin/sed 's/wallpaper=,,//')
+        
+        # If no wallpaper is currently loaded, select any image
+        if [ -z "$CURRENT_WALL" ]; then
+          WALLPAPER=$(${pkgs.coreutils}/bin/find "$WALLPAPER_DIR" -type f \( -iname "*.png" -o -iname "*.jpg" \) | ${pkgs.coreutils}/bin/shuf -n 1)
+        else
+          # Otherwise, pick a random wallpaper that is not the current one
+          WALLPAPER=$(${pkgs.coreutils}/bin/find "$WALLPAPER_DIR" -type f \( -iname "*.png" -o -iname "*.jpg" \) ! -name "$(${pkgs.coreutils}/bin/basename "$CURRENT_WALL")" | ${pkgs.coreutils}/bin/shuf -n 1)
+        fi
+        
+        # Apply the new wallpaper
+        if [ -n "$WALLPAPER" ]; then
+          ${pkgs.hyprland}/bin/hyprctl hyprpaper reload ,"$WALLPAPER"
+        fi
+      ''}";
     };
   };
 

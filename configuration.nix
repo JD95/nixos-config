@@ -103,7 +103,7 @@
     enable = true;
     description = "Restart USBs after suspension";
     after = [ "suspend.target" ];
-    wantedBy = [ "suspend.target" "multi-user.target" ];
+    wantedBy = [ "suspend.target" ];
     serviceConfig = {
       Type = "oneshot";
       ExecStart = "${pkgs.writeShellScript "usb-restart" ''
@@ -160,7 +160,7 @@
       age # secrets generation
       sops # secrets
       zoom-us
-      rofimoji # emoji picker
+      wofi-emoji # emoji picker
       rsync # file sync, mainly for playlist sync
     ]; 
   };
