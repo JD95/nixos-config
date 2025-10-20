@@ -94,6 +94,7 @@
     jellyfin
     jellyfin-web
     jellyfin-ffmpeg
+    ntfs3g
   ];
 
   # These help fix an issue with an external
@@ -108,14 +109,18 @@
       Type = "oneshot";
       ExecStart = "${pkgs.writeShellScript "usb-restart" ''
         ${pkgs.coreutils}/bin/echo "Starting usb-restart"
-
-        ${pkgs.coreutils}/bin/echo \"Disabling usb port 6\"
+        ${pkgs.coreutils}/bin/echo "Disabling usb port 6"
         ${pkgs.kmod}/bin/modprobe -r xhci_pci
-        ${pkgs.coreutils}/bin/echo \"Enabling usb port 6\"
+        ${pkgs.coreutils}/bin/echo "Enabling usb port 6"
       	${pkgs.kmod}/bin/modprobe xhci_pci
-        if [ -d /run/media/jeff/easystore ]; then 
+        if [ ! -d /run/media/jeff/easystore ]; then 
+          ${pkgs.coreutils}/bin/echo "Creating easystore directory"
           ${pkgs.coreutils}/bin/mkdir -p /run/media/jeff/easystore
-          ${pkgs.coreutils}/bin/mount /dev/sdc1 /run/media/jeff/easystore
+          ${pkgs.coreutils}/bin/echo "Mounting directory"
+          ${pkgs.ntfs3g}/bin/ntfs-3g /dev/sdc1 /run/media/jeff/easystore
+          ${pkgs.coreutils}/bin/echo "Success"
+        else 
+          ${pkgs.coreutils}/bin/echo "easystore directory already exists, nothing to do"
         fi
         ''}";
     };
@@ -138,6 +143,8 @@
       "video"
       # For autoloading external drives
       "storage"
+      # For cryptomator
+      "fuse"
     ];
     packages = with pkgs; [
       vivaldi # web browser
