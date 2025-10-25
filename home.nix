@@ -36,10 +36,26 @@ in {
     enable = true;
 
     settings = {
+      general = {
+        # Remove space around windows
+        gaps_out = 0;
+        gaps_in = 0;
+      };
       monitor = [ ",preferred,auto,1" ];
       windowrule = [
-        "noinitialfocus,class:^jetbrains-.*$,floating:1,title:^$|^\s$|^win\d+$"
+        "noinitialfocus,floating:1,class:^(jetbrains-.*)$,title:^(win[0-9]+)$"
+        "float,floating:1,class:^(jetbrains-.*)$,title:^(win[0-9]+)$"
       ];
+      decoration = {
+        # https://wiki.hypr.land/Configuring/Variables/#blur
+        blur = {
+          enabled = true;
+          size = 6;
+          new_optimizations = true;
+          xray = true;
+          popups = true;
+        };
+      };
       bind = [
         "SUPER+SHIFT,Q,exec,hyprlock"
         "SUPER,P,exec,hyprshot -m region"
@@ -112,6 +128,8 @@ in {
       misc = {
         # Makes resizing windows a bit smoother
         animate_manual_resizes = true;
+        disable_hyprland_logo = true;
+        disable_splash_rendering = true;
       };
       exec-once = [
         "waybar"
@@ -127,6 +145,7 @@ in {
           "ctrl:nocaps"
         ];
         follow_mouse = 1;
+        natural_scroll = true;
       };
     };
   };
