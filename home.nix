@@ -37,6 +37,9 @@ in {
 
     settings = {
       monitor = [ ",preferred,auto,1" ];
+      windowrule = [
+        "noinitialfocus,class:^jetbrains-.*$,floating:1,title:^$|^\s$|^win\d+$"
+      ];
       bind = [
         "SUPER+SHIFT,Q,exec,hyprlock"
         "SUPER,P,exec,hyprshot -m region"
