@@ -270,6 +270,15 @@ in {
     enable = true;
     profiles = {
       default = {
+        userSettings = {
+          "nix.enableLanguageServer" = true;
+          "nix.serverPath" = "nil";
+          "nix.serverSettings" = {
+            nil = {
+              formatting = { command = ["nixfmt"]; };
+            };
+          };
+        };
         extensions = with pkgs.vscode-extensions; [
           vscodevim.vim
           jnoortheen.nix-ide

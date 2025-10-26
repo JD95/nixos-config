@@ -151,6 +151,8 @@
       lxsession # gui sudoo entry
       musescore # music notation
       nautilus # file manager separate from gnome
+      nil # nix LSP server
+      nixfmt # Nix code formatter
       obsidian # notes
       quodlibet # music player and library manager
       rsync # file sync, mainly for playlist sync
