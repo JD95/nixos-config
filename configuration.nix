@@ -1,4 +1,4 @@
-{ inputs, config, pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   system.stateVersion = "25.05";
@@ -171,6 +171,7 @@
       vlc # media player
       whatsie # whatsapp client
       wf-recorder # Screen recording
+      wl-clipboard # Wayland terminal Copy/Pasting command
       wofi-emoji # emoji picker
       zoom-us
     ];

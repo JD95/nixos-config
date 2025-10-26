@@ -253,6 +253,7 @@ in {
     profiles = {
       default = {
         userSettings = {
+          "nix.suggest.paths" = false;
           "nix.enableLanguageServer" = true;
           "nix.serverPath" = "nil";
           "nix.serverSettings" = {
