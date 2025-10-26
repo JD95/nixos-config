@@ -1,33 +1,31 @@
 { inputs, pkgs, ... }:
 
-let 
+let
   home-dir = "/home/jeff";
   external-drive-dir = "/run/media/jeff/easystore";
 in {
   home.username = "jeff";
   home.homeDirectory = home-dir;
 
-  imports = [
-    inputs.sops-nix.homeManagerModules.sops
-  ];
+  imports = [ inputs.sops-nix.homeManagerModules.sops ];
 
   sops = {
     age.keyFile = "${home-dir}/.config/sops/age/keys.txt";
     defaultSopsFile = ./secrets.yaml;
     secrets = {
-      "accounts/google/user" = {};
-      "accounts/google/pass" = {};
+      "accounts/google/user" = { };
+      "accounts/google/pass" = { };
     };
   };
 
-  home.packages = with pkgs; [ 
+  home.packages = with pkgs; [
     alacritty
     direnv
     git
     glance # dashboards
     kitty # required by hyprland
     rclone
-    vscode    
+    vscode
     wlsunset
     yazi
     zoxide
@@ -61,7 +59,7 @@ in {
       };
       bind = [
         "SUPER+SHIFT,Q,exec,hyprlock"
-        "SUPER,P,exec,grim -g \"$(slurp)\" - | swappy -f -"
+        ''SUPER,P,exec,grim -g "$(slurp)" - | swappy -f -''
         # bind to .
         "SUPER,code:60,exec,wofi-emoji"
 
@@ -119,10 +117,7 @@ in {
         "CTRL,F6,exec,wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
         "CTRL,F7,exec,wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
       ];
-      bindm = [
-        "SUPER,mouse:272,movewindow"
-        "SUPER,mouse:273,resizewindow"
-      ];
+      bindm = [ "SUPER,mouse:272,movewindow" "SUPER,mouse:273,resizewindow" ];
       cursor = {
         # Prevents stutter when customizing 
         # the cursor
@@ -145,9 +140,7 @@ in {
       ];
       input = {
         kb_layout = "us";
-        kb_options = [
-          "ctrl:nocaps"
-        ];
+        kb_options = [ "ctrl:nocaps" ];
         follow_mouse = 1;
         natural_scroll = true;
       };
@@ -165,16 +158,9 @@ in {
       passthrough = false;
       gtk-layer-shell = true;
       height = 0;
-      modules-left = [
-        "hyprland/workspaces"
-      ];
+      modules-left = [ "hyprland/workspaces" ];
       modules-center = [ ];
-      modules-right = [
-        "pulseaudio"
-        "custom/divider" 
-        "clock"
-        "custom/space"
-      ];
+      modules-right = [ "pulseaudio" "custom/divider" "clock" "custom/space" ];
       pulseaudio = {
         format = "{icon} {volume}%";
         tooltip = false;
@@ -210,9 +196,7 @@ in {
         "/home/jeff/Pictures/wallpapers/penrose_7.png"
         "/home/jeff/Pictures/wallpapers/penrose_8.png"
       ];
-      wallpaper = [
-        ",/home/jeff/Pictures/wallpapers/penrose_1.png"
-      ];
+      wallpaper = [ ",/home/jeff/Pictures/wallpapers/penrose_1.png" ];
     };
   };
 
@@ -230,19 +214,17 @@ in {
   programs.yazi = {
     enable = true;
     plugins = {
-      rsync = pkgs.yaziPlugins.rsync; 
+      rsync = pkgs.yaziPlugins.rsync;
       mount = pkgs.yaziPlugins.mount;
-    }; 
-  };  
+    };
+  };
 
   programs.vim = {
     enable = true;
     defaultEditor = true;
   };
 
-  programs.bash = {
-    enable = true;
-  };
+  programs.bash = { enable = true; };
 
   programs.direnv = {
     enable = true;
@@ -253,7 +235,7 @@ in {
   programs.alacritty = {
     enable = true;
     settings = {
-      font.normal = { 
+      font.normal = {
         family = "Dejavu Sans Mono";
         style = "Regular";
       };
@@ -265,7 +247,7 @@ in {
     userName = "JD95";
     userEmail = "jeffreydwyer95@outlook.com";
   };
-   
+
   programs.vscode = {
     enable = true;
     profiles = {
@@ -274,9 +256,7 @@ in {
           "nix.enableLanguageServer" = true;
           "nix.serverPath" = "nil";
           "nix.serverSettings" = {
-            nil = {
-              formatting = { command = ["nixfmt"]; };
-            };
+            nil = { formatting = { command = [ "nixfmt" ]; }; };
           };
         };
         extensions = with pkgs.vscode-extensions; [
@@ -301,8 +281,8 @@ in {
   };
 
   qt = {
-      enable = true;
-      platformTheme.name = "gtk";
+    enable = true;
+    platformTheme.name = "gtk";
   };
 
   home.pointerCursor = {
@@ -322,12 +302,12 @@ in {
       name = "Papirus-Dark";
     };
     theme = {
-        name = "catppuccin-macchiato-mauve-compact";
-        package = pkgs.catppuccin-gtk.override {
-          accents = ["mauve"];
-          variant = "macchiato";
-          size = "compact";
-        };
+      name = "catppuccin-macchiato-mauve-compact";
+      package = pkgs.catppuccin-gtk.override {
+        accents = [ "mauve" ];
+        variant = "macchiato";
+        size = "compact";
+      };
     };
     gtk3.extraConfig = {
       Settings = ''
@@ -343,12 +323,8 @@ in {
   };
 
   systemd.user.services.sync-google-drive = {
-    Unit = {
-      Description = "Sync Google Drive";
-    };
-    Install = {
-      WantedBy = [ "default.target" ];
-    };
+    Unit = { Description = "Sync Google Drive"; };
+    Install = { WantedBy = [ "default.target" ]; };
     Service = {
       Type = "oneshot";
       ExecStart = "${pkgs.writeShellScript "sync-google-drive" ''
@@ -367,14 +343,12 @@ in {
             --progress \
             --verbose \
             --log-file "${home-dir}/.config/rclone/rclone.log" 
-        ''}";
+      ''}";
     };
   };
 
   systemd.user.services.cycle-wallpaper = {
-    Unit = {
-      Description = "Cycles Wallpapers managed by Hyprpaper";
-    };
+    Unit = { Description = "Cycles Wallpapers managed by Hyprpaper"; };
 
     Install = {
 
@@ -382,65 +356,51 @@ in {
     };
     Service = {
       Type = "oneshot";
-      ExecStart = 
-        let 
-          script = pkgs.writeShellApplication {
-            name = "cycle-wallpaper";
+      ExecStart = let
+        script = pkgs.writeShellApplication {
+          name = "cycle-wallpaper";
 
-            runtimeInputs = with pkgs; [
-              hyprland
-              coreutils
-            ];
+          runtimeInputs = with pkgs; [ hyprland coreutils ];
 
-            text = ''
-              WALLPAPER_DIR="$HOME/Pictures/wallpapers"
-              CURRENT_WALL=$(hyprctl hyprpaper listloaded | grep wallpaper | sed 's/wallpaper=,,//')
-        
-              # If no wallpaper is currently loaded, select any image
-              if [ -z "$CURRENT_WALL" ]; then
-                WALLPAPER=$(find "$WALLPAPER_DIR" -type f \( -iname "*.png" -o -iname "*.jpg" \) | shuf -n 1)
-              else
-                # Otherwise, pick a random wallpaper that is not the current one
-                WALLPAPER=$(find "$WALLPAPER_DIR" -type f \( -iname "*.png" -o -iname "*.jpg" \) ! -name "$(basename "$CURRENT_WALL")" | shuf -n 1)
-              fi
-        
-              # Apply the new wallpaper
-              if [ -n "$WALLPAPER" ]; then
-                hyprctl hyprpaper reload ,"$WALLPAPER"
-              fi 
-              ''; 
-          };
-        in "${script}/bin/cycle-wallpaper";
+          text = ''
+            WALLPAPER_DIR="$HOME/Pictures/wallpapers"
+            CURRENT_WALL=$(hyprctl hyprpaper listloaded | grep wallpaper | sed 's/wallpaper=,,//')
+
+            # If no wallpaper is currently loaded, select any image
+            if [ -z "$CURRENT_WALL" ]; then
+              WALLPAPER=$(find "$WALLPAPER_DIR" -type f \( -iname "*.png" -o -iname "*.jpg" \) | shuf -n 1)
+            else
+              # Otherwise, pick a random wallpaper that is not the current one
+              WALLPAPER=$(find "$WALLPAPER_DIR" -type f \( -iname "*.png" -o -iname "*.jpg" \) ! -name "$(basename "$CURRENT_WALL")" | shuf -n 1)
+            fi
+
+            # Apply the new wallpaper
+            if [ -n "$WALLPAPER" ]; then
+              hyprctl hyprpaper reload ,"$WALLPAPER"
+            fi 
+          '';
+        };
+      in "${script}/bin/cycle-wallpaper";
     };
   };
 
   services.glance = {
     enable = true;
     settings = {
-      server = {
-        port = 8081;
-      };
-      pages = [{ 
-          name = "Home";
-          columns = [
-            {
-              size = "full";
-              widgets = [
-                {
-                  type = "rss";
-                  title = "News";
-                  feeds = [
-                    {
-                      url = "https://www.reddit.com/r/news.rss";
-                    }
-                  ];
-                }
-              ];
-            }
-          ];
+      server = { port = 8081; };
+      pages = [{
+        name = "Home";
+        columns = [{
+          size = "full";
+          widgets = [{
+            type = "rss";
+            title = "News";
+            feeds = [{ url = "https://www.reddit.com/r/news.rss"; }];
+          }];
+        }];
       }];
     };
   };
 
-  home.stateVersion = "25.05"; 
+  home.stateVersion = "25.05";
 }

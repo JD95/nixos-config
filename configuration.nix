@@ -7,11 +7,10 @@
   nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./usb-wakeup-disable.nix
-    ];
+  imports = [ # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ./usb-wakeup-disable.nix
+  ];
 
   # Bootloader.
   boot.loader.grub.enable = true;
@@ -49,7 +48,7 @@
   hardware.nvidia = {
     # Use the open source drivers
     # Recommended for RTX 20-Series
-    open = true; 
+    open = true;
     modesetting.enable = true;
     powerManagement.enable = false;
     powerManagement.finegrained = false;
@@ -83,9 +82,15 @@
 
   hardware.usb.wakeupDisabled = [
     # Keyboard
-    { vendor = "04b4"; product = "0818"; }
+    {
+      vendor = "04b4";
+      product = "0818";
+    }
     # Mouse
-    { vendor = "25a7"; product = "fa07"; }
+    {
+      vendor = "25a7";
+      product = "fa07";
+    }
   ];
 
   # System Packages
@@ -108,17 +113,17 @@
     serviceConfig = {
       Type = "oneshot";
       ExecStart = "${pkgs.writeShellScript "usb-restart" ''
-        ${pkgs.coreutils}/bin/echo "Starting usb-restart"
-        ${pkgs.coreutils}/bin/echo "Disabling usb port 6"
-        ${pkgs.kmod}/bin/modprobe -r xhci_pci
-        ${pkgs.coreutils}/bin/echo "Enabling usb port 6"
-      	${pkgs.kmod}/bin/modprobe xhci_pci
-        ''}";
+          ${pkgs.coreutils}/bin/echo "Starting usb-restart"
+          ${pkgs.coreutils}/bin/echo "Disabling usb port 6"
+          ${pkgs.kmod}/bin/modprobe -r xhci_pci
+          ${pkgs.coreutils}/bin/echo "Enabling usb port 6"
+        	${pkgs.kmod}/bin/modprobe xhci_pci
+      ''}";
     };
   };
   systemd.services."systemd-suspend" = {
     serviceConfig = {
-      Environment =''"SYSTEMD_SLEEP_FREEZE_USER_SESSIONS=false"'';
+      Environment = ''"SYSTEMD_SLEEP_FREEZE_USER_SESSIONS=false"'';
     };
   };
 
@@ -126,10 +131,12 @@
   users.users.jeff = {
     isNormalUser = true;
     description = "Jeff";
-    extraGroups = [ 
-      "networkmanager" "wheel" 
+    extraGroups = [
+      "networkmanager"
+      "wheel"
       # For Android Studio
-      "kvm" "adbusers" 
+      "kvm"
+      "adbusers"
       # For Nvidia
       "video"
       # For autoloading external drives
@@ -147,12 +154,12 @@
       hledger # cli accounting
       jackett # torrent tracker
       keepassxc # password manager
-      libreoffice-qt # office stuff 
+      libreoffice-qt # office stuff
       lxsession # gui sudoo entry
       musescore # music notation
       nautilus # file manager separate from gnome
       nil # nix LSP server
-      nixfmt # Nix code formatter
+      nixfmt-classic # Nix code formatter
       obsidian # notes
       quodlibet # music player and library manager
       rsync # file sync, mainly for playlist sync
@@ -166,7 +173,7 @@
       wf-recorder # Screen recording
       wofi-emoji # emoji picker
       zoom-us
-    ]; 
+    ];
   };
 
   # Fonts
