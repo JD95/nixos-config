@@ -148,6 +148,9 @@
       age # secrets generation
       android-studio
       cryptomator # encrypted vault manager
+      # disabled until I can figure out
+      # how to block history for KeePassXC
+      # cliphist # Clipboard history 
       discord # social app
       grim # Wayland Screenshots
       gnucash # accounting
@@ -161,6 +164,7 @@
       nil # nix LSP server
       nixfmt-classic # Nix code formatter
       obsidian # notes
+      pavucontrol # GUI for audio devices 
       quodlibet # music player and library manager
       rsync # file sync, mainly for playlist sync
       sops # secrets
