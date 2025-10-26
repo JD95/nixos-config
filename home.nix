@@ -24,15 +24,17 @@ in {
     alacritty
     direnv
     git
-    vscode    
-    yazi
+    glance # dashboards
     kitty # required by hyprland
     rclone
+    vscode    
     wlsunset
+    yazi
     zoxide
   ];
 
   programs.kitty.enable = true;
+
   wayland.windowManager.hyprland = {
     enable = true;
 
@@ -388,6 +390,34 @@ in {
           ${pkgs.hyprland}/bin/hyprctl hyprpaper reload ,"$WALLPAPER"
         fi
       ''}";
+    };
+  };
+
+  services.glance = {
+    enable = true;
+    settings = {
+      server = {
+        port = 8081;
+      };
+      pages = [{ 
+          name = "Home";
+          columns = [
+            {
+              size = "full";
+              widgets = [
+                {
+                  type = "rss";
+                  title = "News";
+                  feeds = [
+                    {
+                      url = "https://www.reddit.com/r/news.rss";
+                    }
+                  ];
+                }
+              ];
+            }
+          ];
+      }];
     };
   };
 
