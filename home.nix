@@ -58,7 +58,7 @@ in {
       };
       bind = [
         "SUPER+SHIFT,Q,exec,hyprlock"
-        "SUPER,P,exec,hyprshot -m region"
+        "SUPER,P,exec,grim -g \"$(slurp)\" - | swappy -f -"
         # bind to .
         "SUPER,code:60,exec,wofi-emoji"
 

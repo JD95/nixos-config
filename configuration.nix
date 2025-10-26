@@ -138,29 +138,31 @@
       "fuse"
     ];
     packages = with pkgs; [
-      vivaldi # web browser
-      obsidian # notes
-      vlc # media player
-      quodlibet # music player and library manager
-      discord # social app
-      keepassxc # password manager
-      cryptomator # encrypted vault manager
-      jackett # torrent tracker
+      age # secrets generation
       android-studio
-      ueberzugpp # image rendering in terminal via X11
+      cryptomator # encrypted vault manager
+      discord # social app
+      grim # Wayland Screenshots
       gnucash # accounting
+      hledger # cli accounting
+      jackett # torrent tracker
+      keepassxc # password manager
       libreoffice-qt # office stuff 
-      whatsie # whatsapp client
+      lxsession # gui sudoo entry
       musescore # music notation
       nautilus # file manager separate from gnome
-      lxsession # gui sudoo entry
-      hyprshot # screenshots
-      age # secrets generation
-      sops # secrets
-      zoom-us
-      wofi-emoji # emoji picker
+      obsidian # notes
+      quodlibet # music player and library manager
       rsync # file sync, mainly for playlist sync
-      hledger # cli accounting
+      sops # secrets
+      slurp # Wayland region selector (screenshots)
+      swappy # Screenshot annotator
+      ueberzugpp # image rendering in terminal via X11
+      vivaldi # web browser
+      vlc # media player
+      whatsie # whatsapp client
+      wofi-emoji # emoji picker
+      zoom-us
     ]; 
   };
 
