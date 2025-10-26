@@ -373,23 +373,35 @@ in {
     };
     Service = {
       Type = "oneshot";
-      ExecStart = "${pkgs.writeShellScript "cycle-wallpaper" ''
-        WALLPAPER_DIR="$HOME/Pictures/wallpapers"
-        CURRENT_WALL=$(${pkgs.hyprland}/bin/hyprctl hyprpaper listloaded | ${pkgs.coreutils}/bin/grep wallpaper | ${pkgs.coreutils}/bin/sed 's/wallpaper=,,//')
+      ExecStart = 
+        let 
+          script = pkgs.writeShellApplication {
+            name = "cycle-wallpaper";
+
+            runtimeInputs = with pkgs; [
+              hyprland
+              coreutils
+            ];
+
+            text = ''
+              WALLPAPER_DIR="$HOME/Pictures/wallpapers"
+              CURRENT_WALL=$(hyprctl hyprpaper listloaded | grep wallpaper | sed 's/wallpaper=,,//')
         
-        # If no wallpaper is currently loaded, select any image
-        if [ -z "$CURRENT_WALL" ]; then
-          WALLPAPER=$(${pkgs.coreutils}/bin/find "$WALLPAPER_DIR" -type f \( -iname "*.png" -o -iname "*.jpg" \) | ${pkgs.coreutils}/bin/shuf -n 1)
-        else
-          # Otherwise, pick a random wallpaper that is not the current one
-          WALLPAPER=$(${pkgs.coreutils}/bin/find "$WALLPAPER_DIR" -type f \( -iname "*.png" -o -iname "*.jpg" \) ! -name "$(${pkgs.coreutils}/bin/basename "$CURRENT_WALL")" | ${pkgs.coreutils}/bin/shuf -n 1)
-        fi
+              # If no wallpaper is currently loaded, select any image
+              if [ -z "$CURRENT_WALL" ]; then
+                WALLPAPER=$(find "$WALLPAPER_DIR" -type f \( -iname "*.png" -o -iname "*.jpg" \) | shuf -n 1)
+              else
+                # Otherwise, pick a random wallpaper that is not the current one
+                WALLPAPER=$(find "$WALLPAPER_DIR" -type f \( -iname "*.png" -o -iname "*.jpg" \) ! -name "$(basename "$CURRENT_WALL")" | shuf -n 1)
+              fi
         
-        # Apply the new wallpaper
-        if [ -n "$WALLPAPER" ]; then
-          ${pkgs.hyprland}/bin/hyprctl hyprpaper reload ,"$WALLPAPER"
-        fi
-      ''}";
+              # Apply the new wallpaper
+              if [ -n "$WALLPAPER" ]; then
+                hyprctl hyprpaper reload ,"$WALLPAPER"
+              fi 
+              ''; 
+          };
+        in "${script}/bin/cycle-wallpaper";
     };
   };
 
