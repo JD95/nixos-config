@@ -161,6 +161,7 @@
       vivaldi # web browser
       vlc # media player
       whatsie # whatsapp client
+      wf-recorder # Screen recording
       wofi-emoji # emoji picker
       zoom-us
     ]; 

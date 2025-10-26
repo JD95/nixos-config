@@ -28,6 +28,7 @@ in {
     yazi
     kitty # required by hyprland
     rclone
+    wlsunset
     zoxide
   ];
 
@@ -137,6 +138,7 @@ in {
         "nm-applet"
         "hyprpaper"
         "blueman-applet"
+        # For password prompts
         "lxsession"
       ];
       input = {
@@ -212,6 +214,12 @@ in {
     };
   };
 
+  services.wlsunset = {
+    enable = true;
+    latitude = 34.03;
+    longitude = -118.35;
+  };
+
   programs.zoxide = {
     enable = true;
     enableBashIntegration = true;
@@ -285,12 +293,14 @@ in {
       enable = true;
       platformTheme.name = "gtk";
   };
+
   home.pointerCursor = {
     gtk.enable = true;
     package = pkgs.bibata-cursors;
     name = "Bibata-Modern-Classic";
     size = 12;
   };
+
   gtk = {
     enable = true;
     iconTheme = {
