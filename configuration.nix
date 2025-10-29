@@ -145,6 +145,7 @@
       "fuse"
     ];
     packages = with pkgs; [
+      aichat # LLM terminal interface
       age # secrets generation
       android-studio
       cryptomator # encrypted vault manager
