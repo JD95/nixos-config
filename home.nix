@@ -36,6 +36,10 @@ in {
   wayland.windowManager.hyprland = {
     enable = true;
 
+    plugins = with pkgs.hyprlandPlugins; [
+      hyprexpo
+    ];
+
     settings = {
       general = {
         # Remove space around windows
@@ -99,8 +103,7 @@ in {
         "SUPER+CTRL,7,focusworkspaceoncurrentmonitor,7"
         "SUPER+CTRL,8,focusworkspaceoncurrentmonitor,8"
         "SUPER+CTRL,9,focusworkspaceoncurrentmonitor,9"
-        "SUPER,TAB,focusworkspaceoncurrentmonitor,+1"
-        "SUPER+SHIFT,TAB,focusworkspaceoncurrentmonitor,-1"
+        "SUPER,TAB,hyprexpo:expo,toggle"
 
         # Workspace Windows 
         "SUPER+CTRL+SHIFT,1,movetoworkspacesilent,1"
@@ -122,6 +125,13 @@ in {
         # Prevents stutter when customizing 
         # the cursor
         no_hardware_cursors = true;
+      };
+      plugin = {
+        hyprexpo = {
+          columns = 3;
+          gap_size = 5;
+          bg_col = "rgb(111111)";
+        };
       };
       misc = {
         # Makes resizing windows a bit smoother
