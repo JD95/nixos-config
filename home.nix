@@ -104,6 +104,8 @@ in {
         "SUPER+CTRL,8,focusworkspaceoncurrentmonitor,8"
         "SUPER+CTRL,9,focusworkspaceoncurrentmonitor,9"
         "SUPER,TAB,hyprexpo:expo,toggle"
+        "SUPER,mouse_up,focusworkspaceoncurrentmonitor,m+1"
+        "SUPER,mouse_down,focusworkspaceoncurrentmonitor,m-1"
 
         # Workspace Windows 
         "SUPER+CTRL+SHIFT,1,movetoworkspacesilent,1"
@@ -120,7 +122,10 @@ in {
         "CTRL,F6,exec,wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
         "CTRL,F7,exec,wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
       ];
-      bindm = [ "SUPER,mouse:272,movewindow" "SUPER,mouse:273,resizewindow" ];
+      bindm = [ 
+        "SUPER,mouse:272,movewindow"
+        "SUPER,mouse:273,resizewindow" 
+      ];
       cursor = {
         # Prevents stutter when customizing 
         # the cursor
