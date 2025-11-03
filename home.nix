@@ -117,6 +117,7 @@ in {
         "SUPER+CTRL+SHIFT,7,movetoworkspacesilent,7"
         "SUPER+CTRL+SHIFT,8,movetoworkspacesilent,8"
         "SUPER+CTRL+SHIFT,9,movetoworkspacesilent,9"
+        "SUPER,M,movetoworkspacesilent,emptym+1"
 
         # Volume Controls
         "CTRL,F6,exec,wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
