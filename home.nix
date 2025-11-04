@@ -62,7 +62,7 @@ in {
         };
       };
       bind = [
-        "SUPER+SHIFT,Q,exec,hyprlock"
+        "SUPER,L,exec,hyprlock"
         ''SUPER,P,exec,grim -g "$(slurp)" - | swappy -f -''
         # bind to .
         "SUPER,code:60,exec,wofi-emoji"
@@ -196,7 +196,33 @@ in {
   };
 
   programs.wofi.enable = true;
-  programs.hyprlock.enable = true;
+  programs.hyprlock = {
+    enable = true;
+    settings = {
+      general = {
+        hide_cursor = true;
+      };
+      background = [
+        {
+          color = "rgba(0,0,0,1.0)";
+          blur_passes = 0;
+        }
+      ];
+      input-field = [
+        {
+          size = "200, 50";
+          position = "0m -80";
+          monitor = "DP-4";
+          dots_center = true;
+          fade_on_empty = false;
+          font_color = "rgb(202, 211, 245)"; 
+          inner_color = "rgb(91, 96, 120)"; 
+          outer_color = "rgb(24, 25, 38)"; 
+          outline_thickness = 5;
+        }
+      ];
+    };
+  };
   services.mako.enable = true;
   services.hypridle.enable = true;
   services.hyprpaper = {

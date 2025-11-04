@@ -17,6 +17,16 @@
   boot.loader.grub.device = "/dev/sdb";
   boot.loader.grub.useOSProber = true;
 
+  boot.kernelParams = [ 
+    # Prevents blank screen after suspend 
+    "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+
+    # These help fix an issue with an external
+    # drive getting lost after suspends 
+    "usbcore.autosuspend=-1"
+    "xhci_hcd.quirks=270336" 
+  ];
+
   # Networking
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
@@ -48,9 +58,9 @@
   hardware.nvidia = {
     # Use the open source drivers
     # Recommended for RTX 20-Series
-    open = true;
+    open = false;
     modesetting.enable = true;
-    powerManagement.enable = false;
+    powerManagement.enable = true;
     powerManagement.finegrained = false;
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
@@ -101,10 +111,6 @@
     jellyfin-ffmpeg
     ntfs3g
   ];
-
-  # These help fix an issue with an external
-  # drive getting lost after suspends 
-  boot.kernelParams = [ "usbcore.autosuspend=-1" "xhci_hcd.quirks=270336" ];
   systemd.services.usb-restart = {
     enable = true;
     description = "Restart USBs after suspension";
