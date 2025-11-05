@@ -18,9 +18,6 @@
   boot.loader.grub.useOSProber = true;
 
   boot.kernelParams = [ 
-    # Prevents blank screen after suspend 
-    "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
-
     # These help fix an issue with an external
     # drive getting lost after suspends 
     "usbcore.autosuspend=-1"
@@ -58,12 +55,10 @@
   hardware.nvidia = {
     # Use the open source drivers
     # Recommended for RTX 20-Series
-    open = false;
+    open = true;
     modesetting.enable = true;
     powerManagement.enable = true;
     powerManagement.finegrained = false;
-    nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
   # For Login screen
   services.displayManager.sddm.enable = true;
