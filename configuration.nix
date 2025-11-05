@@ -55,11 +55,12 @@
   hardware.nvidia = {
     # Use the open source drivers
     # Recommended for RTX 20-Series
-    open = true;
+    open = false;
     modesetting.enable = true;
     powerManagement.enable = true;
-    powerManagement.finegrained = false;
+    nvidiaSettings = true;
   };
+
   # For Login screen
   services.displayManager.sddm.enable = true;
   programs.hyprland.enable = true;
