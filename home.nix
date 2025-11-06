@@ -21,7 +21,6 @@ in {
   home.packages = with pkgs; [
     alacritty
     direnv
-    git
     glance # dashboards
     kitty # required by hyprland
     rclone
@@ -62,7 +61,7 @@ in {
         };
       };
       bind = [
-        "SUPER+SHIFT,L,exec,hyprlock"
+        "SUPER+CRTL,Q,exec,hyprlock"
         ''SUPER,P,exec,grim -g "$(slurp)" - | swappy -f -''
         # bind to .
         "SUPER,code:60,exec,wofi-emoji"
@@ -288,6 +287,9 @@ in {
     enable = true;
     userName = "JD95";
     userEmail = "jeffreydwyer95@outlook.com";
+    extraConfig = {
+      diff.tool = "vimdiff";
+    };
   };
 
   programs.vscode = {
@@ -435,11 +437,27 @@ in {
         name = "Home";
         columns = [{
           size = "full";
-          widgets = [{
-            type = "rss";
-            title = "News";
-            feeds = [{ url = "https://www.reddit.com/r/news.rss"; }];
-          }];
+          widgets = [
+            {
+              type = "rss";
+              title = "News";
+              feeds = [{ url = "https://www.reddit.com/r/news.rss"; }];
+            }
+            {
+              type = "rss";
+              title = "Politics";
+              feeds = [
+                # Adam Mockler
+                { url = "https://www.youtube.com/feeds/videos.xml?channel_id=UC8DA4o0SyaGfyVaBLbF5EXg"; }
+                # Hasan
+                { url = "https://www.youtube.com/feeds/videos.xml?channel_id=UCtoaZpBnrd0lhycxYJ4MNOQ"; }
+                # Vaush
+                { url = "https://www.youtube.com/feeds/videos.xml?channel_id=UC1E-JS8L0j1Ei70D9VEFrPQ"; }
+                # The Rational National
+                { url = "https://www.youtube.com/feeds/videos.xml?channel_id=UCo9oQdIk1MfcnzypG3UnURA"; }
+              ];
+            }
+          ];
         }];
       }];
     };
