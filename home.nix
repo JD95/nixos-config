@@ -61,7 +61,7 @@ in {
         };
       };
       bind = [
-        "SUPER+CRTL,Q,exec,hyprlock"
+        "SUPER+CTRL,Q,exec,hyprlock"
         ''SUPER,P,exec,grim -g "$(slurp)" - | swappy -f -''
         # bind to .
         "SUPER,code:60,exec,wofi-emoji"
