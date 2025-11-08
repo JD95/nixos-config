@@ -1,6 +1,8 @@
-{ home-dir }: { ... }: 
+{ home-dir }: { inputs, ... }: 
 
 {
+
+  imports = [ inputs.sops-nix.homeManagerModules.sops ];
 
   sops = {
     age.keyFile = "${home-dir}/.config/sops/age/keys.txt";

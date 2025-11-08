@@ -8,7 +8,6 @@ in {
   home.homeDirectory = home-dir;
 
   imports = [ 
-    inputs.sops-nix.homeManagerModules.sops
     (import ./home/sops.nix { inherit home-dir; })
     (import ./home/hyprland.nix)
     (import ./home/yazi.nix)
