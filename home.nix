@@ -7,7 +7,10 @@ in {
   home.username = "jeff";
   home.homeDirectory = home-dir;
 
-  imports = [ inputs.sops-nix.homeManagerModules.sops ];
+  imports = [ 
+    inputs.sops-nix.homeManagerModules.sops 
+    inputs.nvf.homeManagerModules.default
+  ];
 
   sops = {
     age.keyFile = "${home-dir}/.config/sops/age/keys.txt";
@@ -265,9 +268,30 @@ in {
     automount = true;
   };
 
-  programs.vim = {
+  programs.nvf = {
     enable = true;
-    defaultEditor = true;
+    settings = {
+      vim = {
+        theme = {
+          enable = true;
+          name = "gruvbox";
+          style = "dark";
+        };
+        viAlias = true;
+        vimAlias = true;
+        lsp.enable = true; 
+        statusline.lualine.enable = true;
+        telescope.enable = true;
+        autocomplete.nvim-cmp.enable = true;
+
+        languages = {
+          enableLSP = true;
+          enableTreesitter = true;
+          nix.enable = true;
+          rust.enable = true;
+        };
+      };
+    };
   };
 
   programs.bash = { enable = true; };
