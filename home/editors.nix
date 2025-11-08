@@ -20,7 +20,6 @@
         autocomplete.nvim-cmp.enable = true;
 
         languages = {
-          enableLSP = true;
           enableTreesitter = true;
           nix.enable = true;
           rust.enable = true;
