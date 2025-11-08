@@ -8,11 +8,10 @@ in {
   home.homeDirectory = home-dir;
 
   imports = [ 
+    inputs.sops-nix.homeManagerModules.sops
     (import ./home/sops.nix { inherit home-dir; })
     (import ./home/hyprland.nix)
     (import ./home/yazi.nix)
-    inputs.sops-nix.homeManagerModules.sops 
-    inputs.nvf.homeManagerModules.default
   ];
 
   home.packages = with pkgs; [
@@ -26,33 +25,6 @@ in {
     yazi
     zoxide
   ];
-
-
-  programs.nvf = {
-    enable = true;
-    settings = {
-      vim = {
-        theme = {
-          enable = true;
-          name = "gruvbox";
-          style = "dark";
-        };
-        viAlias = true;
-        vimAlias = true;
-        lsp.enable = true; 
-        statusline.lualine.enable = true;
-        telescope.enable = true;
-        autocomplete.nvim-cmp.enable = true;
-
-        languages = {
-          enableLSP = true;
-          enableTreesitter = true;
-          nix.enable = true;
-          rust.enable = true;
-        };
-      };
-    };
-  };
 
   programs.bash = { enable = true; };
 
@@ -78,29 +50,6 @@ in {
     userEmail = "jeffreydwyer95@outlook.com";
     extraConfig = {
       diff.tool = "vimdiff";
-    };
-  };
-
-  programs.vscode = {
-    enable = true;
-    profiles = {
-      default = {
-        userSettings = {
-          "nix.suggest.paths" = false;
-          "nix.enableLanguageServer" = true;
-          "nix.serverPath" = "nil";
-          "nix.serverSettings" = {
-            nil = { formatting = { command = [ "nixfmt" ]; }; };
-          };
-        };
-        extensions = with pkgs.vscode-extensions; [
-          vscodevim.vim
-          jnoortheen.nix-ide
-          haskell.haskell
-          mkhl.direnv
-          rust-lang.rust-analyzer
-        ];
-      };
     };
   };
 
