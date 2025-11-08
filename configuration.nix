@@ -163,7 +163,7 @@
       libreoffice-qt # office stuff
       lxsession # gui sudoo entry
       musescore # music notation
-      nautilus # file manager separate from gnome
+      # nautilus # file manager separate from gnome
       nil # nix LSP server
       nixfmt-classic # Nix code formatter
       obsidian # notes

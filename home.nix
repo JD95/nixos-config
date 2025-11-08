@@ -260,6 +260,11 @@ in {
     };
   };
 
+  services.udiskie = {
+    enable = true;
+    automount = true;
+  };
+
   programs.vim = {
     enable = true;
     defaultEditor = true;
