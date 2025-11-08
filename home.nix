@@ -10,6 +10,7 @@ in {
   imports = [ 
     (import ./home/sops.nix { inherit home-dir; })
     (import ./home/hyprland.nix)
+    (import ./home/yazi.nix)
     inputs.sops-nix.homeManagerModules.sops 
     inputs.nvf.homeManagerModules.default
   ];
@@ -26,23 +27,6 @@ in {
     zoxide
   ];
 
-  programs.zoxide = {
-    enable = true;
-    enableBashIntegration = true;
-  };
-
-  programs.yazi = {
-    enable = true;
-    plugins = {
-      rsync = pkgs.yaziPlugins.rsync;
-      mount = pkgs.yaziPlugins.mount;
-    };
-  };
-
-  services.udiskie = {
-    enable = true;
-    automount = true;
-  };
 
   programs.nvf = {
     enable = true;
