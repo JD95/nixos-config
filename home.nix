@@ -8,18 +8,10 @@ in {
   home.homeDirectory = home-dir;
 
   imports = [ 
+    (import ./home/sops.nix { inherit home-dir; })
     inputs.sops-nix.homeManagerModules.sops 
     inputs.nvf.homeManagerModules.default
   ];
-
-  sops = {
-    age.keyFile = "${home-dir}/.config/sops/age/keys.txt";
-    defaultSopsFile = ./secrets.yaml;
-    secrets = {
-      "accounts/google/user" = { };
-      "accounts/google/pass" = { };
-    };
-  };
 
   home.packages = with pkgs; [
     alacritty
