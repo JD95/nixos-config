@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 
 let 
   politicsFeeds = [
@@ -29,7 +29,9 @@ in {
             {
               type = "rss";
               title = "Politics";
-              feeds = politicsFeeds;
+              feeds = {
+                "$include" = config.sops.secrets."services/glance/feeds/politics".path;
+              };
             }
           ];
         }];
