@@ -74,9 +74,11 @@
         "SUPER+CTRL,7,focusworkspaceoncurrentmonitor,7"
         "SUPER+CTRL,8,focusworkspaceoncurrentmonitor,8"
         "SUPER+CTRL,9,focusworkspaceoncurrentmonitor,9"
-        "SUPER,TAB,hyprexpo:expo,toggle"
+        "SUPER+CTRL,H,focusworkspaceoncurrentmonitor,m-1"
+        "SUPER+CTRL,L,focusworkspaceoncurrentmonitor,m+1"
         "SUPER,mouse_up,focusworkspaceoncurrentmonitor,m+1"
         "SUPER,mouse_down,focusworkspaceoncurrentmonitor,m-1"
+        "SUPER,TAB,hyprexpo:expo,toggle"
 
         # Workspace Windows 
         "SUPER+CTRL+SHIFT,1,movetoworkspacesilent,1"
@@ -88,6 +90,8 @@
         "SUPER+CTRL+SHIFT,7,movetoworkspacesilent,7"
         "SUPER+CTRL+SHIFT,8,movetoworkspacesilent,8"
         "SUPER+CTRL+SHIFT,9,movetoworkspacesilent,9"
+        "SUPER+CTRL+SHIFT,H,movetoworkspacesilent,m-1"
+        "SUPER+CTRL+SHIFT,L,movetoworkspacesilent,m+1"
         "SUPER,M,movetoworkspacesilent,emptym+1"
 
         # Volume Controls

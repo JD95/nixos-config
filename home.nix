@@ -13,6 +13,7 @@ in {
     (import ./home/yazi.nix)
     (import ./home/editors.nix)
     (import ./home/glance.nix)
+    (import ./home/zsh.nix)
   ];
 
   home.packages = with pkgs; [
@@ -41,6 +42,9 @@ in {
       font.normal = {
         family = "Dejavu Sans Mono";
         style = "Regular";
+      };
+      terminal.shell = {
+        program = "zsh";
       };
     };
   };
